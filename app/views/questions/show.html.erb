@@ -1,2 +1,4 @@
 <h1><%= @question.title %></h1>
+<p>Asked by: <%= @question.user.username %></p>
 <p><%= @question.description %></p>
+<%= link_to "Home", questions_path %>
