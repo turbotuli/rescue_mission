@@ -1,4 +1,24 @@
-<h1><%= @question.title %></h1>
+<h1>Question: <%= @question.title %></h1>
 <p>Asked by: <%= @question.user.username %></p>
+<p>Description:</p>
 <p><%= @question.description %></p>
+<% if @answer.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% @answer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= render 'answers/form', question: @question, answer: @answer %>
+<p id="notice"><%= notice %></p>
+<% if @answers.any? %>
+  <h2>Answers:</h2>
+  <ul>
+    <% @answers.each do |answer| %>
+      <li><%= answer.description %></li>
+    <% end %>
+  </ul>
+<% end %>
 <%= link_to "Home", questions_path %>

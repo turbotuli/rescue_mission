@@ -1,0 +1,12 @@
+<%= form_for [question, answer] do |f| %>
+  <div class="field">
+    <%= f.label :user_id, "Username" %>
+    <%= f.collection_select :user_id, User.all, :id, :username %>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Answer Question" %>
+  </div>
+<% end %>

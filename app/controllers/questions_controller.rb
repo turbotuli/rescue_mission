@@ -5,6 +5,9 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find_by(id: params[:id])
+    # why doesn't @question.answers work?
+    @answers = Question.find_by(id: params[:id]).answers.order('created_at desc')
+    @answer = Answer.new
   end
 
   def new
