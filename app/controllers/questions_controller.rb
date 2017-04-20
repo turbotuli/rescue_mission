@@ -14,6 +14,10 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
+  def edit
+    @question = Question.find_by(id: params[:id])
+  end
+
   def create
     @question = Question.new(question_params)
 
@@ -22,6 +26,13 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def destroy
+    Question.find_by(id: params[:id]).delete
+    Answer.where(question_id: params[:id]).delete_all
+
+    redirect_to questions_index_path, notice: 'Your question has been deleted.'
   end
 
   private

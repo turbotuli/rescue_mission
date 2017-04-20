@@ -1,7 +1,8 @@
 <h1>Question: <%= @question.title %></h1>
+<%= link_to 'Edit Question', edit_question_path(@question) %> |
+<%= link_to 'Delete Question', @question, method: :delete, data: { confirm: 'Are you sure?' } %>
 <p>Asked by: <%= @question.user.username %></p>
-<p>Description:</p>
-<p><%= @question.description %></p>
+<p>Description: <%= @question.description %></p>
 <% if @answer.errors.any? %>
   <div id="error_explanation">
     <ul>
