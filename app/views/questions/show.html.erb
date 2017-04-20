@@ -18,7 +18,13 @@
   <h2>Answers:</h2>
   <ul>
     <% @answers.each do |answer| %>
-      <li><%= answer.description %></li>
+      <li><%= answer.description %> |
+        <% if answer.best_answer == true %>
+          Best Answer
+        <% else %>
+          <%= link_to 'Mark as Best', question_answer_path(@question, answer), method: :patch %>
+        <% end %>
+      </li>
     <% end %>
   </ul>
 <% end %>
