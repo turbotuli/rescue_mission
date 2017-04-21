@@ -2,8 +2,6 @@ class User < ApplicationRecord
 has_many :questions
 has_many :answers
 
-validates :username, presence: true
-
 def self.from_omniauth(auth)
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
       user.email = auth.info.email

@@ -7,6 +7,11 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find(params[:question_id])
     @answer = Answer.new(answer_params)
+    @answer.update_attributes(
+      {
+        user_id: session[:user_id]
+      }
+    )
     @answer.question = @question
     if @answer.save
       redirect_to @question, notice: 'Your answer has been posted successfully.'

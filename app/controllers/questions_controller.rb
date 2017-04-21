@@ -8,6 +8,10 @@ class QuestionsController < ApplicationController
     # why doesn't @question.answers work?
     @answers = Question.find_by(id: params[:id]).answers.order('created_at desc')
     @answer = Answer.new
+    if !current_user.nil?
+      @edit = true if current_user.id == @question.user_id
+      @can_answer = true if !current_user.id.nil? && current_user.id != @question.user_id
+    end
   end
 
   def new
@@ -18,9 +22,23 @@ class QuestionsController < ApplicationController
     @question = Question.find_by(id: params[:id])
   end
 
+  def update
+    @question = Question.find_by(id: params[:id])
+    if current_user.id == @question.user_id
+      @question.update_attributes(question_params)
+      redirect_to @question, notice: "Your question has been updated."
+    else
+      redirect_to @question, notice: "You cannot update a question that is not yours."
+    end
+  end
+
   def create
     @question = Question.new(question_params)
-
+    @question.update_attributes(
+      {
+        user_id: session[:user_id]
+      }
+    )
     if @question.save
       redirect_to @question, notice: 'Your question has been posted successfully.'
     else
@@ -37,7 +55,7 @@ class QuestionsController < ApplicationController
 
   private
     def question_params
-      params.require(:question).permit(:user_id, :title, :description)
+      params.require(:question).permit(:title, :description)
     end
 
 end

@@ -11,8 +11,6 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :user_id, "Username" %>
-    <%= f.collection_select :user_id, User.all, :id, :username %>
     <%= f.label :title %>
     <%= f.text_field :title %>
     <%= f.label :description %>
